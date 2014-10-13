@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqableArray", "LinqableArray\LinqableArray.csproj", "{23E43D1A-6A5F-412F-ACC8-47CEA0882E3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqableArray.Tests", "LinqableArray.Tests\LinqableArray.Tests.csproj", "{DDF609AC-BC81-458E-B4A7-D8828EDC4C3A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{23E43D1A-6A5F-412F-ACC8-47CEA0882E3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23E43D1A-6A5F-412F-ACC8-47CEA0882E3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23E43D1A-6A5F-412F-ACC8-47CEA0882E3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23E43D1A-6A5F-412F-ACC8-47CEA0882E3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDF609AC-BC81-458E-B4A7-D8828EDC4C3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDF609AC-BC81-458E-B4A7-D8828EDC4C3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDF609AC-BC81-458E-B4A7-D8828EDC4C3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDF609AC-BC81-458E-B4A7-D8828EDC4C3A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
