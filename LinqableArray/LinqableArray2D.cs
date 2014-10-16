@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MasuqatNet.Collections
 {
-	public class LinqableArray2D<T> : IStructuralEquatable
+	public class LinqableArray2D<T> : IStructuralEquatable, IStructuralComparable
 	{
 		private T[] _items;
 		private int[] _lengths = new int[2];
@@ -63,6 +63,22 @@ namespace MasuqatNet.Collections
 		int IStructuralEquatable.GetHashCode(IEqualityComparer comparer)
 		{
 			return comparer.GetHashCode(this._items);
+		}
+
+		int IStructuralComparable.CompareTo(object other, IComparer comparer)
+		{
+			if (other == null)
+			{
+				return 1;
+
+			}
+			var otherArray = other as LinqableArray2D<T>;
+			if (otherArray == null)
+			{
+				throw new ArgumentException("Incorrect type", "other");
+			}
+
+			return comparer.Compare(this._lengths, otherArray._lengths);
 		}
 	}
 }
