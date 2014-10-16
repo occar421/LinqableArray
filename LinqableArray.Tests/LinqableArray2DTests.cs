@@ -40,5 +40,23 @@ namespace LinqableArray.Tests
 			Assert.AreEqual(array[2, 0], 4);
 			Assert.AreEqual(array[2, 1], 5);
 		}
+
+		[TestMethod]
+		public void IndexOf_Test()
+		{
+			var array = new LinqableArray2D<int>(3, 2);
+			array[0, 0] = 0;
+			array[0, 1] = 1;
+			array[1, 0] = 2;
+			array[1, 1] = 3;
+			array[2, 0] = 4;
+			array[2, 1] = 5;
+
+			var retIn = array.IndexOf(3);
+			Assert.IsTrue(new Tuple<int, int>(1, 1).Equals(retIn));
+
+			var retOut = array.IndexOf(99);
+			Assert.IsTrue(new Tuple<int, int>(-1, -1).Equals(retOut));
+		}
 	}
 }

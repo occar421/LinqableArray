@@ -90,5 +90,19 @@ namespace MasuqatNet.Collections
 		{
 			return _items.GetEnumerator();
 		}
+
+		/// <summary>
+		/// Searching the item from entire array. This returns indices begin from 0.
+		/// </summary>
+		/// <returns>Tuple of index numbers. If array does not contains item, returns (-1, -1)</returns>
+		public Tuple<int, int> IndexOf(T item)
+		{
+			var index = Array.IndexOf(_items, item);
+			if (index < 0)
+			{
+				return new Tuple<int, int>(-1, -1);
+			}
+			return new Tuple<int, int>(index / _lengths[1], index % _lengths[1]);
+		}
 	}
 }
