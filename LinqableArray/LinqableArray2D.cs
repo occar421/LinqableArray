@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MasuqatNet.Collections
 {
-	public class LinqableArray2D<T> : IStructuralEquatable, IStructuralComparable
+	public class LinqableArray2D<T> : IStructuralEquatable, IStructuralComparable, IEnumerable<T>, IEnumerable
 	{
 		private T[] _items;
 		private int[] _lengths = new int[2];
@@ -79,6 +79,16 @@ namespace MasuqatNet.Collections
 			}
 
 			return comparer.Compare(this._lengths, otherArray._lengths);
+		}
+
+		public IEnumerator<T> GetEnumerator()
+		{
+			return ((IEnumerable<T>)_items).GetEnumerator();
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return _items.GetEnumerator();
 		}
 	}
 }
