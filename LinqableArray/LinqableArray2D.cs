@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace MasuqatNet.Collections
 {
-	public class LinqableArray2D<T>
+	public class LinqableArray2D<T> : IStructuralEquatable
 	{
 		private T[] _items;
 		private int[] _lengths = new int[2];
@@ -47,6 +48,21 @@ namespace MasuqatNet.Collections
 				var realIndex = index1 * _lengths[1] + index2;
 				_items[realIndex] = value;
 			}
+		}
+
+		bool IStructuralEquatable.Equals(object other, IEqualityComparer comparer)
+		{
+			var otherArray = other as LinqableArray2D<T>;
+			if (otherArray == null)
+			{
+				return false;
+			}
+			return comparer.Equals(this._lengths, otherArray._lengths);
+		}
+
+		int IStructuralEquatable.GetHashCode(IEqualityComparer comparer)
+		{
+			return comparer.GetHashCode(this._items);
 		}
 	}
 }
