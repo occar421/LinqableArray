@@ -58,5 +58,81 @@ namespace LinqableArray.Tests
 			var retOut = array.IndexOf(99);
 			Assert.IsTrue(new Tuple<int, int>(-1, -1).Equals(retOut));
 		}
+
+		[TestMethod]
+		public void GetAll1DEnumerables_Test()
+		{
+			var array = new LinqableArray2D<int>(3, 2);
+			array[0, 0] = 0;
+			array[0, 1] = 1;
+			array[1, 0] = 2;
+			array[1, 1] = 3;
+			array[2, 0] = 4;
+			array[2, 1] = 5;
+
+			//reverseItem = false, bool reverseEnumerate = false
+			using (var e = array.GetAll1DEnumerables(0, reverseItem: false, reverseEnumerate: false).GetEnumerator())
+			{
+				for (int i = 0; e.MoveNext(); i++)
+				{
+					Assert.IsTrue(Enumerable.Range(i * 2, 2).SequenceEqual(e.Current));
+				}
+			}
+			using (var e = array.GetAll1DEnumerables(1, reverseItem: false, reverseEnumerate: false).GetEnumerator())
+			{
+				for (int i = 0; e.MoveNext(); i++)
+				{
+					Assert.IsTrue(Enumerable.Range(0, 3).Select(x => 2 * x + i).SequenceEqual(e.Current));
+				}
+			}
+
+			//reverseItem = true, bool reverseEnumerate = false
+			using (var e = array.GetAll1DEnumerables(0, reverseItem: true, reverseEnumerate: false).GetEnumerator())
+			{
+				for (int i = 0; e.MoveNext(); i++)
+				{
+					Assert.IsTrue(Enumerable.Range(i * 2, 2).Reverse().SequenceEqual(e.Current));
+				}
+			}
+			using (var e = array.GetAll1DEnumerables(1, reverseItem: true, reverseEnumerate: false).GetEnumerator())
+			{
+				for (int i = 0; e.MoveNext(); i++)
+				{
+					Assert.IsTrue(Enumerable.Range(0, 3).Select(x => 2 * x + i).Reverse().SequenceEqual(e.Current));
+				}
+			}
+
+			//reverseItem = false, bool reverseEnumerate = true
+			using (var e = array.GetAll1DEnumerables(0, reverseItem: false, reverseEnumerate: true).GetEnumerator())
+			{
+				for (int i = 2; e.MoveNext(); i--)
+				{
+					Assert.IsTrue(Enumerable.Range(i * 2, 2).SequenceEqual(e.Current));
+				}
+			}
+			using (var e = array.GetAll1DEnumerables(1, reverseItem: false, reverseEnumerate: true).GetEnumerator())
+			{
+				for (int i = 1; e.MoveNext(); i--)
+				{
+					Assert.IsTrue(Enumerable.Range(0, 3).Select(x => 2 * x + i).SequenceEqual(e.Current));
+				}
+			}
+
+			//reverseItem = true, bool reverseEnumerate = true
+			using (var e = array.GetAll1DEnumerables(0, reverseItem: true, reverseEnumerate: true).GetEnumerator())
+			{
+				for (int i = 2; e.MoveNext(); i--)
+				{
+					Assert.IsTrue(Enumerable.Range(i * 2, 2).Reverse().SequenceEqual(e.Current));
+				}
+			}
+			using (var e = array.GetAll1DEnumerables(1, reverseItem: true, reverseEnumerate: true).GetEnumerator())
+			{
+				for (int i = 1; e.MoveNext(); i--)
+				{
+					Assert.IsTrue(Enumerable.Range(0, 3).Select(x => 2 * x + i).Reverse().SequenceEqual(e.Current));
+				}
+			}
+		}
 	}
 }

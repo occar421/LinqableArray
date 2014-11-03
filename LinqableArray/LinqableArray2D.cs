@@ -104,5 +104,62 @@ namespace MasuqatNet.Collections
 			}
 			return new Tuple<int, int>(index / _lengths[1], index % _lengths[1]);
 		}
+
+		/// <summary>
+		/// Get enumeration of indexed one.
+		/// </summary>
+		/// <returns>One IEnumerable&lt;T&gt; at index.</returns>
+		public IEnumerable<T> Get1DEnumerable(int dimension, int index, bool reverse = false)
+		{
+			int stride, initIndex, length;
+
+			switch (dimension)
+			{
+				case 0:
+					stride = reverse ? -1 : 1;
+					initIndex = reverse ? ((index + 1) * _lengths[1] - 1) : (index * _lengths[1]);
+					length = _lengths[1];
+					break;
+				case 1:
+					stride = reverse ? -_lengths[1] : _lengths[1];
+					initIndex = reverse ? ((_lengths[0] - 1) * _lengths[1] + index) : index;
+					length = _lengths[0];
+					break;
+				default:
+					throw new ArgumentOutOfRangeException("dimension");
+			}
+
+			for (int itr = initIndex, i = 0; i < length; itr += stride, i++)
+			{
+				yield return _items[itr];
+			}
+		}
+
+		/// <summary>
+		/// Get all enumeration.
+		/// </summary>
+		/// <returns>All IEnumerable&lt;T&gt;</returns>
+		public IEnumerable<IEnumerable<T>> GetAll1DEnumerables(int dimension, bool reverseItem = false, bool reverseEnumerate = false)
+		{
+			if (dimension < 0 || 2 < dimension)
+			{
+				throw new ArgumentOutOfRangeException("dimension");
+			}
+
+			if (reverseEnumerate)
+			{
+				for (int i = _lengths[dimension] - 1; i >= 0; i--)
+				{
+					yield return Get1DEnumerable(dimension, i, reverseItem);
+				}
+			}
+			else
+			{
+				for (int i = 0; i < _lengths[dimension]; i++)
+				{
+					yield return Get1DEnumerable(dimension, i, reverseItem);
+				}
+			}
+		}
 	}
 }
