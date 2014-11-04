@@ -10,6 +10,53 @@ namespace LinqableArray.Tests
 	public class LinqableArray2DTests
 	{
 		[TestMethod]
+		[TestCategory("Ctor"), TestCategory("Fail")]
+		public void NormalCtor_FailTest()
+		{
+			try
+			{
+				var array = new LinqableArray2D<int>(-1, 4);
+				Assert.Fail("An exception should have been thrown.");
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				Assert.AreEqual("length1", ex.ParamName);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			try
+			{
+				var array = new LinqableArray2D<int>(4, -1);
+				Assert.Fail("An exception should have been thrown.");
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				Assert.AreEqual("length2", ex.ParamName);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			try
+			{
+				var array = new LinqableArray2D<int>(-1, -1);
+				Assert.Fail("An exception should have been thrown.");
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				Assert.AreEqual("length1", ex.ParamName);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
+
+		[TestMethod]
 		public void DataOrder_And_Indexer_Test()
 		{
 			var actualArray = new[] { 0, 1, 2, 3, 4, 5 };

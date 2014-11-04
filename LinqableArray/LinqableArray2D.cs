@@ -13,6 +13,15 @@ namespace MasuqatNet.Collections
 
 		public LinqableArray2D(int length1, int length2)
 		{
+			if (length1 < 0)
+			{
+				throw new ArgumentOutOfRangeException("length1");
+			}
+			if (length2 < 0)
+			{
+				throw new ArgumentOutOfRangeException("length2");
+			}
+
 			_lengths[0] = length1;
 			_lengths[1] = length2;
 			_items = new T[length1 * length2];
