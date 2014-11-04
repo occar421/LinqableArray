@@ -11,7 +11,7 @@ namespace LinqableArray.Tests
 	{
 		[TestMethod]
 		[TestCategory("Ctor"), TestCategory("Fail")]
-		public void NormalCtor_FailTest()
+		public void CtorWithRange_ArgumentsInvalidRange_Test()
 		{
 			try
 			{
@@ -76,7 +76,7 @@ namespace LinqableArray.Tests
 		[TestMethod]
 		[TestCategory("Ctor"), TestCategory("Fail")]
 		[ExpectedException(typeof(ArgumentNullException))]
-		public void CtorWith2DRectangularArray_ArgumentNull_FailTest()
+		public void CtorWith2DRectangularArray_ArgumentNull_Test()
 		{
 			var array = new LinqableArray2D<int>(rectangularArray: null);
 		}
@@ -101,7 +101,7 @@ namespace LinqableArray.Tests
 		[TestMethod]
 		[TestCategory("Ctor"), TestCategory("Fail")]
 		[ExpectedException(typeof(ArgumentNullException))]
-		public void CtorWith2DJuggedArray_ArgumentNull_FailTest()
+		public void CtorWith2DJuggedArray_ArgumentNull_Test()
 		{
 			var array = new LinqableArray2D<int>(juggedArray: null);
 		}
@@ -109,7 +109,7 @@ namespace LinqableArray.Tests
 		[TestMethod]
 		[TestCategory("Ctor"), TestCategory("Fail")]
 		[ExpectedException(typeof(ArgumentException))]
-		public void CtorWith2DJuggedArray_ArgumentUnflatted_FailTest()
+		public void CtorWith2DJuggedArray_ArgumentUnflatted_Test()
 		{
 			var juggedArray = new int[][] { new int[] { 0, 1 },
 											new int[] { 2, 3 },
