@@ -82,6 +82,42 @@ namespace LinqableArray.Tests
 		}
 
 		[TestMethod]
+		[TestCategory("Ctor")]
+		public void CtorWithJuggedArray_Test()
+		{
+			var juggedArray = new int[][] { new int[] { 0, 1 },
+											new int[] { 2, 3 },
+											new int[] { 4, 5 }};
+			LinqableArray2D<int> array = new LinqableArray2D<int>(juggedArray);
+
+			Assert.AreEqual(array[0, 0], 0);
+			Assert.AreEqual(array[0, 1], 1);
+			Assert.AreEqual(array[1, 0], 2);
+			Assert.AreEqual(array[1, 1], 3);
+			Assert.AreEqual(array[2, 0], 4);
+			Assert.AreEqual(array[2, 1], 5);
+		}
+
+		[TestMethod]
+		[TestCategory("Ctor"), TestCategory("Fail")]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void CtorWith2DJuggedArray_ArgumentNull_FailTest()
+		{
+			var array = new LinqableArray2D<int>(juggedArray: null);
+		}
+
+		[TestMethod]
+		[TestCategory("Ctor"), TestCategory("Fail")]
+		[ExpectedException(typeof(ArgumentException))]
+		public void CtorWith2DJuggedArray_ArgumentUnflatted_FailTest()
+		{
+			var juggedArray = new int[][] { new int[] { 0, 1 },
+											new int[] { 2, 3 },
+											new int[] { 4, 5, 6 }};
+			var array = new LinqableArray2D<int>(juggedArray);
+		}
+
+		[TestMethod]
 		public void DataOrder_And_Indexer_Test()
 		{
 			var actualArray = new[] { 0, 1, 2, 3, 4, 5 };

@@ -46,6 +46,33 @@ namespace MasuqatNet.Collections
 			}
 		}
 
+		public LinqableArray2D(T[][] juggedArray)
+		{
+			if (juggedArray == null)
+			{
+				throw new ArgumentNullException("juggedArray");
+			}
+
+			_lengths[0] = juggedArray.Length;
+			_lengths[1] = juggedArray.Length <= 0 ? 0 : juggedArray.First().Length;
+			if (juggedArray.Any(x => x.Length != _lengths[1]))
+			{
+				throw new ArgumentException("array contains different length sub-array", "array");
+			}
+
+			_items = new T[_lengths[0] * _lengths[1]];
+
+			var i = 0;
+			foreach (var subArray in juggedArray)
+			{
+				foreach (var item in subArray)
+				{
+					_items[i] = item;
+					i++;
+				}
+			}
+		}
+
 		public T this[int index1, int index2]
 		{
 			get
