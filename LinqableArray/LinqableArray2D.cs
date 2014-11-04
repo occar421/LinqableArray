@@ -27,6 +27,25 @@ namespace MasuqatNet.Collections
 			_items = new T[length1 * length2];
 		}
 
+		public LinqableArray2D(T[,] rectangularArray)
+		{
+			if (rectangularArray == null)
+			{
+				throw new ArgumentNullException("rectangularArray");
+			}
+
+			_lengths[0] = rectangularArray.GetLength(0);
+			_lengths[1] = rectangularArray.GetLength(1);
+			_items = new T[_lengths[0] * _lengths[1]];
+
+			var i = 0;
+			foreach (var item in rectangularArray)
+			{
+				_items[i] = item;
+				i++;
+			}
+		}
+
 		public T this[int index1, int index2]
 		{
 			get

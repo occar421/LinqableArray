@@ -57,6 +57,31 @@ namespace LinqableArray.Tests
 		}
 
 		[TestMethod]
+		[TestCategory("Ctor")]
+		public void CtorWith2DRectangularArray_Test()
+		{
+			var rectangularArray = new int[,] {	{ 0, 1 },
+												{ 2, 3 },
+												{ 4, 5 }};
+			LinqableArray2D<int> array = new LinqableArray2D<int>(rectangularArray);
+
+			Assert.AreEqual(array[0, 0], 0);
+			Assert.AreEqual(array[0, 1], 1);
+			Assert.AreEqual(array[1, 0], 2);
+			Assert.AreEqual(array[1, 1], 3);
+			Assert.AreEqual(array[2, 0], 4);
+			Assert.AreEqual(array[2, 1], 5);
+		}
+
+		[TestMethod]
+		[TestCategory("Ctor"), TestCategory("Fail")]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void CtorWith2DRectangularArray_ArgumentNull_FailTest()
+		{
+			var array = new LinqableArray2D<int>(rectangularArray: null);
+		}
+
+		[TestMethod]
 		public void DataOrder_And_Indexer_Test()
 		{
 			var actualArray = new[] { 0, 1, 2, 3, 4, 5 };
