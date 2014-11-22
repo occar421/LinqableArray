@@ -242,5 +242,25 @@ namespace LinqableArray.Tests
 				}
 			}
 		}
+
+		[TestMethod]
+		public void ToArray2D_Test()
+		{
+			var linqableArray = new LinqableArray2D<int>(3, 2);
+			linqableArray[0, 0] = 0;
+			linqableArray[0, 1] = 1;
+			linqableArray[1, 0] = 2;
+			linqableArray[1, 1] = 3;
+			linqableArray[2, 0] = 4;
+			linqableArray[2, 1] = 5;
+
+			var array2D = linqableArray.ToArray2D();
+			Assert.AreEqual(array2D[0, 0], 0);
+			Assert.AreEqual(array2D[0, 1], 1);
+			Assert.AreEqual(array2D[1, 0], 2);
+			Assert.AreEqual(array2D[1, 1], 3);
+			Assert.AreEqual(array2D[2, 0], 4);
+			Assert.AreEqual(array2D[2, 1], 5);
+		}
 	}
 }

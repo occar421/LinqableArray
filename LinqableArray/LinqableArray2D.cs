@@ -228,5 +228,18 @@ namespace MasuqatNet.Collections
 				}
 			}
 		}
+
+		public T[,] ToArray2D()
+		{
+			var array2D = new T[_lengths[0], _lengths[1]];
+			for (int i = 0; i < _lengths[0]; i++)
+			{
+				for (int j = 0; j < _lengths[1]; j++)
+				{
+					array2D[i, j] = this.Get(i, j);
+				}
+			}
+			return array2D;
+		}
 	}
 }
