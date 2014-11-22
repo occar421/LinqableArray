@@ -282,5 +282,46 @@ namespace LinqableArray.Tests
 			Assert.AreEqual(array2D[2][0], 4);
 			Assert.AreEqual(array2D[2][1], 5);
 		}
+
+		[TestMethod]
+		public void GetLength_Test()
+		{
+			var array = new LinqableArray2D<int>(1, 2);
+			Assert.AreEqual(array.GetLength(0), 1);
+			Assert.AreEqual(array.GetLength(1), 2);
+		}
+
+		[TestMethod]
+		[TestCategory("Fail")]
+		public void GetLength_ArgumentInvalidRange_Test()
+		{
+			var array = new LinqableArray2D<int>(1, 2);
+
+			try
+			{
+				array.GetLength(-1);
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				Assert.AreEqual("dimension", ex.ParamName);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			try
+			{
+				array.GetLength(2);
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				Assert.AreEqual("dimension", ex.ParamName);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
 	}
 }

@@ -255,5 +255,18 @@ namespace MasuqatNet.Collections
 			}
 			return array2D;
 		}
+
+		/// <summary>
+		/// Get length of a dimension
+		/// </summary>
+		/// <returns>length of a dimension</returns>
+		public int GetLength(int dimension)
+		{
+			if (dimension < 0 || 1 < dimension)
+			{
+				throw new ArgumentOutOfRangeException("dimension");
+			}
+			return _lengths[dimension];
+		}
 	}
 }
