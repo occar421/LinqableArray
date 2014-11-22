@@ -86,8 +86,7 @@ namespace MasuqatNet.Collections
 					throw new IndexOutOfRangeException("index2");
 				}
 
-				var realIndex = index1 * _lengths[1] + index2;
-				return _items[realIndex];
+				return Get(index1, index2);
 			}
 			set
 			{
@@ -100,9 +99,22 @@ namespace MasuqatNet.Collections
 					throw new IndexOutOfRangeException("index2");
 				}
 
-				var realIndex = index1 * _lengths[1] + index2;
-				_items[realIndex] = value;
+				Set(value, index1, index2);
 			}
+		}
+
+		//reliable range only
+		private T Get(int index1, int index2)
+		{
+			var realIndex = index1 * _lengths[1] + index2;
+			return _items[realIndex];
+		}
+
+		//reliable range only
+		private void Set(T value, int index1, int index2)
+		{
+			var realIndex = index1 * _lengths[1] + index2;
+			_items[realIndex] = value;
 		}
 
 		bool IStructuralEquatable.Equals(object other, IEqualityComparer comparer)
