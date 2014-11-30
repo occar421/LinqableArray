@@ -323,5 +323,170 @@ namespace LinqableArray.Tests
 				Assert.Fail(ex.Message);
 			}
 		}
+
+		[TestMethod]
+		public void ReshapeWithTuple_Test()
+		{
+			var array = new LinqableArray2D<int>(3, 2);
+			array[0, 0] = 0;
+			array[0, 1] = 1;
+			array[1, 0] = 2;
+			array[1, 1] = 3;
+			array[2, 0] = 4;
+			array[2, 1] = 5;
+
+			var reshapedArray = array.Reshape(Tuple.Create(1, 6));
+
+			Assert.AreEqual(reshapedArray.GetLength(0), 1);
+			Assert.AreEqual(reshapedArray.GetLength(1), 6);
+
+			Assert.AreEqual(reshapedArray[0, 0], 0);
+			Assert.AreEqual(reshapedArray[0, 1], 1);
+			Assert.AreEqual(reshapedArray[0, 2], 2);
+			Assert.AreEqual(reshapedArray[0, 3], 3);
+			Assert.AreEqual(reshapedArray[0, 4], 4);
+			Assert.AreEqual(reshapedArray[0, 5], 5);
+		}
+
+		[TestMethod]
+		[TestCategory("Fail")]
+		public void ReshapeWithTuple_ArgumentError_Test()
+		{
+			var array = new LinqableArray2D<int>(3, 2);
+			array[0, 0] = 0;
+			array[0, 1] = 1;
+			array[1, 0] = 2;
+			array[1, 1] = 3;
+			array[2, 0] = 4;
+			array[2, 1] = 5;
+
+			try
+			{
+				array.Reshape(null);
+			}
+			catch (ArgumentNullException ex)
+			{
+				Assert.AreEqual("sizes", ex.ParamName);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			try
+			{
+				array.Reshape(Tuple.Create(-1, 6));
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				Assert.AreEqual("sizes.Item1", ex.ParamName);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			try
+			{
+				array.Reshape(Tuple.Create(6, -1));
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				Assert.AreEqual("sizes.Item2", ex.ParamName);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			try
+			{
+				array.Reshape(Tuple.Create(4, 5));
+			}
+			catch (ArgumentException ex)
+			{
+				Assert.AreEqual("sizes", ex.ParamName);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
+
+		[TestMethod]
+		public void ReshapeWithRange_Test()
+		{
+			var array = new LinqableArray2D<int>(3, 2);
+			array[0, 0] = 0;
+			array[0, 1] = 1;
+			array[1, 0] = 2;
+			array[1, 1] = 3;
+			array[2, 0] = 4;
+			array[2, 1] = 5;
+
+			var reshapedArray = array.Reshape(1, 6);
+
+			Assert.AreEqual(reshapedArray.GetLength(0), 1);
+			Assert.AreEqual(reshapedArray.GetLength(1), 6);
+
+			Assert.AreEqual(reshapedArray[0, 0], 0);
+			Assert.AreEqual(reshapedArray[0, 1], 1);
+			Assert.AreEqual(reshapedArray[0, 2], 2);
+			Assert.AreEqual(reshapedArray[0, 3], 3);
+			Assert.AreEqual(reshapedArray[0, 4], 4);
+			Assert.AreEqual(reshapedArray[0, 5], 5);
+		}
+
+		[TestMethod]
+		[TestCategory("Fail")]
+		public void ReshapeWithRange_ArgumentError_Test()
+		{
+			var array = new LinqableArray2D<int>(3, 2);
+			array[0, 0] = 0;
+			array[0, 1] = 1;
+			array[1, 0] = 2;
+			array[1, 1] = 3;
+			array[2, 0] = 4;
+			array[2, 1] = 5;
+
+			try
+			{
+				array.Reshape(-1, 6);
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				Assert.AreEqual("size1", ex.ParamName);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			try
+			{
+				array.Reshape(6, -1);
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				Assert.AreEqual("size2", ex.ParamName);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			try
+			{
+				array.Reshape(4, 5);
+			}
+			catch (ArgumentException ex)
+			{
+				Assert.AreEqual("size1, size2", ex.ParamName);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
 	}
 }

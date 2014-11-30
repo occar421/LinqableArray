@@ -270,5 +270,66 @@ namespace MasuqatNet.Collections
 			}
 			return _lengths[dimension];
 		}
+
+		/// <summary>
+		/// Returns a new shaped 2d-array without changing data.
+		/// </summary>
+		/// <returns>reshaped 2D array</returns>
+		public LinqableArray2D<T> Reshape(Tuple<int, int> sizes)
+		{
+			if (sizes == null)
+			{
+				throw new ArgumentNullException("sizes");
+			}
+
+			if (sizes.Item1 < 0)
+			{
+				throw new ArgumentOutOfRangeException("sizes.Item1");
+			}
+			if (sizes.Item2 < 0)
+			{
+				throw new ArgumentOutOfRangeException("sizes.Item2");
+			}
+
+			if (_lengths[0] * _lengths[1] != sizes.Item1 * sizes.Item2)
+			{
+				throw new ArgumentException("total size of new array must be unchanged", "sizes");
+			}
+
+			return ReshapeInPrivate(sizes.Item1, sizes.Item2);
+		}
+
+		/// <summary>
+		/// Returns a new shaped 2d-array without changing data.
+		/// </summary>
+		/// <returns>reshaped 2D array</returns>
+		public LinqableArray2D<T> Reshape(int size1, int size2)
+		{
+			if (size1 < 0)
+			{
+				throw new ArgumentOutOfRangeException("size1");
+			}
+			if (size2 < 0)
+			{
+				throw new ArgumentOutOfRangeException("size2");
+			}
+
+			if (_lengths[0] * _lengths[1] != size1 * size2)
+			{
+				throw new ArgumentException("total size of new array must be unchanged", "size1, size2");
+			}
+
+			return ReshapeInPrivate(size1, size2);
+		}
+
+		//reliable size only
+		private LinqableArray2D<T> ReshapeInPrivate(int size1, int size2)
+		{
+			var newArray = new LinqableArray2D<T>();
+			newArray._items = new T[size1 * size2];
+			newArray._lengths = new[] { size1, size2 };
+			this._items.CopyTo(newArray._items, 0);
+			return newArray;
+		}
 	}
 }
