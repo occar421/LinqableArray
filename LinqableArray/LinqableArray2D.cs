@@ -11,6 +11,8 @@ namespace MasuqatNet.Collections
 		private T[] _items;
 		private int[] _lengths = new int[2];
 
+		private LinqableArray2D() { }
+
 		public LinqableArray2D(int length1, int length2)
 		{
 			if (length1 < 0)
