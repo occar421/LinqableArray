@@ -13,20 +13,20 @@ namespace MasuqatNet.Collections
 
 		private LinqableArray2D() { }
 
-		public LinqableArray2D(int length1, int length2)
+		public LinqableArray2D(int length0, int length1)
 		{
+			if (length0 < 0)
+			{
+				throw new ArgumentOutOfRangeException("length0");
+			}
 			if (length1 < 0)
 			{
 				throw new ArgumentOutOfRangeException("length1");
 			}
-			if (length2 < 0)
-			{
-				throw new ArgumentOutOfRangeException("length2");
-			}
 
-			_lengths[0] = length1;
-			_lengths[1] = length2;
-			_items = new T[length1 * length2];
+			_lengths[0] = length0;
+			_lengths[1] = length1;
+			_items = new T[length0 * length1];
 		}
 
 		public LinqableArray2D(T[,] rectangularArray)
@@ -75,47 +75,47 @@ namespace MasuqatNet.Collections
 			}
 		}
 
-		public T this[int index1, int index2]
+		public T this[int index0, int index1]
 		{
 			get
 			{
-				if (index1 < 0 || _lengths[0] <= index1)
+				if (index0 < 0 || _lengths[0] <= index0)
+				{
+					throw new IndexOutOfRangeException("index0");
+				}
+				if (index1 < 0 || _lengths[1] <= index1)
 				{
 					throw new IndexOutOfRangeException("index1");
 				}
-				if (index2 < 0 || _lengths[1] <= index2)
-				{
-					throw new IndexOutOfRangeException("index2");
-				}
 
-				return Get(index1, index2);
+				return Get(index0, index1);
 			}
 			set
 			{
-				if (index1 < 0 || _lengths[0] <= index1)
+				if (index0 < 0 || _lengths[0] <= index0)
+				{
+					throw new IndexOutOfRangeException("index0");
+				}
+				if (index1 < 0 || _lengths[1] <= index1)
 				{
 					throw new IndexOutOfRangeException("index1");
 				}
-				if (index2 < 0 || _lengths[1] <= index2)
-				{
-					throw new IndexOutOfRangeException("index2");
-				}
 
-				Set(value, index1, index2);
+				Set(value, index0, index1);
 			}
 		}
 
 		//reliable range only
-		private T Get(int index1, int index2)
+		private T Get(int index0, int index1)
 		{
-			var realIndex = index1 * _lengths[1] + index2;
+			var realIndex = index0 * _lengths[1] + index1;
 			return _items[realIndex];
 		}
 
 		//reliable range only
-		private void Set(T value, int index1, int index2)
+		private void Set(T value, int index0, int index1)
 		{
-			var realIndex = index1 * _lengths[1] + index2;
+			var realIndex = index0 * _lengths[1] + index1;
 			_items[realIndex] = value;
 		}
 
@@ -303,31 +303,31 @@ namespace MasuqatNet.Collections
 		/// Returns a new shaped 2d-array without changing data.
 		/// </summary>
 		/// <returns>reshaped 2D array</returns>
-		public LinqableArray2D<T> Reshape(int size1, int size2)
+		public LinqableArray2D<T> Reshape(int size0, int size1)
 		{
+			if (size0 < 0)
+			{
+				throw new ArgumentOutOfRangeException("size0");
+			}
 			if (size1 < 0)
 			{
 				throw new ArgumentOutOfRangeException("size1");
 			}
-			if (size2 < 0)
+
+			if (_lengths[0] * _lengths[1] != size0 * size1)
 			{
-				throw new ArgumentOutOfRangeException("size2");
+				throw new ArgumentException("total size of new array must be unchanged", "size0, size1");
 			}
 
-			if (_lengths[0] * _lengths[1] != size1 * size2)
-			{
-				throw new ArgumentException("total size of new array must be unchanged", "size1, size2");
-			}
-
-			return ReshapeInPrivate(size1, size2);
+			return ReshapeInPrivate(size0, size1);
 		}
 
 		//reliable size only
-		private LinqableArray2D<T> ReshapeInPrivate(int size1, int size2)
+		private LinqableArray2D<T> ReshapeInPrivate(int size0, int size1)
 		{
 			var newArray = new LinqableArray2D<T>();
-			newArray._items = new T[size1 * size2];
-			newArray._lengths = new[] { size1, size2 };
+			newArray._items = new T[size0 * size1];
+			newArray._lengths = new[] { size0, size1 };
 			this._items.CopyTo(newArray._items, 0);
 			return newArray;
 		}

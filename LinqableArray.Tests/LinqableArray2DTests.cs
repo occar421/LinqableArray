@@ -20,7 +20,7 @@ namespace LinqableArray.Tests
 			}
 			catch (ArgumentOutOfRangeException ex)
 			{
-				Assert.AreEqual("length1", ex.ParamName);
+				Assert.AreEqual("length0", ex.ParamName);
 			}
 			catch (Exception ex)
 			{
@@ -34,7 +34,7 @@ namespace LinqableArray.Tests
 			}
 			catch (ArgumentOutOfRangeException ex)
 			{
-				Assert.AreEqual("length2", ex.ParamName);
+				Assert.AreEqual("length1", ex.ParamName);
 			}
 			catch (Exception ex)
 			{
@@ -48,7 +48,7 @@ namespace LinqableArray.Tests
 			}
 			catch (ArgumentOutOfRangeException ex)
 			{
-				Assert.AreEqual("length1", ex.ParamName);
+				Assert.AreEqual("length0", ex.ParamName);
 			}
 			catch (Exception ex)
 			{
@@ -455,7 +455,7 @@ namespace LinqableArray.Tests
 			}
 			catch (ArgumentOutOfRangeException ex)
 			{
-				Assert.AreEqual("size1", ex.ParamName);
+				Assert.AreEqual("size0", ex.ParamName);
 			}
 			catch (Exception ex)
 			{
@@ -468,7 +468,7 @@ namespace LinqableArray.Tests
 			}
 			catch (ArgumentOutOfRangeException ex)
 			{
-				Assert.AreEqual("size2", ex.ParamName);
+				Assert.AreEqual("size1", ex.ParamName);
 			}
 			catch (Exception ex)
 			{
@@ -481,7 +481,7 @@ namespace LinqableArray.Tests
 			}
 			catch (ArgumentException ex)
 			{
-				Assert.AreEqual("size1, size2", ex.ParamName);
+				Assert.AreEqual("size0, size1", ex.ParamName);
 			}
 			catch (Exception ex)
 			{
