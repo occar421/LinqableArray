@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using MasuqatNet.Collections;
 
-namespace LinqableArray.Tests
+namespace MasuqatNet.Collections.Tests
 {
 	[TestClass]
 	public class LinqableArray2DTests

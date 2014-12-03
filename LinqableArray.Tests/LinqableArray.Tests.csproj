@@ -6,8 +6,8 @@
     <ProjectGuid>{DDF609AC-BC81-458E-B4A7-D8828EDC4C3A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LinqableArray.Tests</RootNamespace>
-    <AssemblyName>LinqableArray.Tests</AssemblyName>
+    <RootNamespace>MasuqatNet.Collections.Tests</RootNamespace>
+    <AssemblyName>MasuqatNet.Collections.LinqableArray.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
