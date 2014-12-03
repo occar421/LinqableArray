@@ -331,5 +331,83 @@ namespace MasuqatNet.Collections
 			this._items.CopyTo(newArray._items, 0);
 			return newArray;
 		}
+
+		/// <summary>
+		/// Copy all elements of this array to another 2D array.
+		/// </summary>
+		/// <param name="rectangularArray">destination</param>
+		/// <param name="index0">destination offset of dimension 0</param>
+		/// <param name="index1">destination offset of dimension 1</param>
+		public void CopyTo(T[,] rectangularArray, int index0 = 0, int index1 = 0)
+		{
+			if (rectangularArray == null)
+			{
+				throw new ArgumentNullException("rectangularArray");
+			}
+			if (index0 < 0)
+			{
+				throw new ArgumentOutOfRangeException("index0");
+			}
+			if (index1 < 0)
+			{
+				throw new ArgumentOutOfRangeException("index1");
+			}
+			if (rectangularArray.GetLength(0) < index0 + this._lengths[0])
+			{
+				throw new ArgumentException("Out of array size with dimension 0.");
+			}
+			if (rectangularArray.GetLength(1) < index1 + this._lengths[1])
+			{
+				throw new ArgumentException("Out of array size with dimension 1.");
+			}
+
+			var counter = 0;
+			for (int i = index0; i < index0 + _lengths[0]; i++)
+			{
+				for (int j = index1; j < index1 + _lengths[1]; j++)
+				{
+					rectangularArray[i, j] = this._items[counter++];
+				}
+			}
+		}
+
+		/// <summary>
+		/// Copy all elements of this array to another Linqable2D array.
+		/// </summary>
+		/// <param name="linqableArray">destination</param>
+		/// <param name="index0">destination offset of dimension 0</param>
+		/// <param name="index1">destination offset of dimension 1</param>
+		public void CopyTo(LinqableArray2D<T> linqableArray, int index0 = 0, int index1 = 0)
+		{
+			if (linqableArray == null)
+			{
+				throw new ArgumentNullException("linqableArray");
+			}
+			if (index0 < 0)
+			{
+				throw new ArgumentOutOfRangeException("index0");
+			}
+			if (index1 < 0)
+			{
+				throw new ArgumentOutOfRangeException("index1");
+			}
+			if (linqableArray._lengths[0] < index0 + this._lengths[0])
+			{
+				throw new ArgumentException("Out of array size with dimension 0.");
+			}
+			if (linqableArray._lengths[1] < index1 + this._lengths[1])
+			{
+				throw new ArgumentException("Out of array size with dimension 1.");
+			}
+
+			var counter = 0;
+			for (int i = index0; i < index0 + _lengths[0]; i++)
+			{
+				for (int j = index1; j < index1 + _lengths[1]; j++)
+				{
+					linqableArray.Set(this._items[counter++], i, j);
+				}
+			}
+		}
 	}
 }

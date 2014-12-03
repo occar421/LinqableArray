@@ -488,5 +488,369 @@ namespace LinqableArray.Tests
 				Assert.Fail(ex.Message);
 			}
 		}
+
+		[TestMethod]
+		public void CopyTo2DRectangularArray_Test()
+		{
+			var array = new LinqableArray2D<int>(3, 2);
+			array[0, 0] = 10;
+			array[0, 1] = 11;
+			array[1, 0] = 12;
+			array[1, 1] = 13;
+			array[2, 0] = 14;
+			array[2, 1] = 15;
+
+			int[,] dest;
+
+
+			dest = new int[4, 3];
+			array.CopyTo(dest, 0, 0);
+
+			Assert.AreEqual(dest[0, 0], 10);
+			Assert.AreEqual(dest[0, 1], 11);
+			Assert.AreEqual(dest[0, 2], 0);
+			Assert.AreEqual(dest[1, 0], 12);
+			Assert.AreEqual(dest[1, 1], 13);
+			Assert.AreEqual(dest[1, 2], 0);
+			Assert.AreEqual(dest[2, 0], 14);
+			Assert.AreEqual(dest[2, 1], 15);
+			Assert.AreEqual(dest[2, 2], 0);
+			Assert.AreEqual(dest[3, 0], 0);
+			Assert.AreEqual(dest[3, 1], 0);
+			Assert.AreEqual(dest[3, 2], 0);
+
+
+			dest = new int[4, 3];
+			array.CopyTo(dest, 1, 0);
+
+			Assert.AreEqual(dest[0, 0], 0);
+			Assert.AreEqual(dest[0, 1], 0);
+			Assert.AreEqual(dest[0, 2], 0);
+			Assert.AreEqual(dest[1, 0], 10);
+			Assert.AreEqual(dest[1, 1], 11);
+			Assert.AreEqual(dest[1, 2], 0);
+			Assert.AreEqual(dest[2, 0], 12);
+			Assert.AreEqual(dest[2, 1], 13);
+			Assert.AreEqual(dest[2, 2], 0);
+			Assert.AreEqual(dest[3, 0], 14);
+			Assert.AreEqual(dest[3, 1], 15);
+			Assert.AreEqual(dest[3, 2], 0);
+
+
+			dest = new int[4, 3];
+			array.CopyTo(dest, 0, 1);
+
+			Assert.AreEqual(dest[0, 0], 0);
+			Assert.AreEqual(dest[0, 1], 10);
+			Assert.AreEqual(dest[0, 2], 11);
+			Assert.AreEqual(dest[1, 0], 0);
+			Assert.AreEqual(dest[1, 1], 12);
+			Assert.AreEqual(dest[1, 2], 13);
+			Assert.AreEqual(dest[2, 0], 0);
+			Assert.AreEqual(dest[2, 1], 14);
+			Assert.AreEqual(dest[2, 2], 15);
+			Assert.AreEqual(dest[3, 0], 0);
+			Assert.AreEqual(dest[3, 1], 0);
+			Assert.AreEqual(dest[3, 2], 0);
+
+
+			dest = new int[4, 3];
+			array.CopyTo(dest, 1, 1);
+
+			Assert.AreEqual(dest[0, 0], 0);
+			Assert.AreEqual(dest[0, 1], 0);
+			Assert.AreEqual(dest[0, 2], 0);
+			Assert.AreEqual(dest[1, 0], 0);
+			Assert.AreEqual(dest[1, 1], 10);
+			Assert.AreEqual(dest[1, 2], 11);
+			Assert.AreEqual(dest[2, 0], 0);
+			Assert.AreEqual(dest[2, 1], 12);
+			Assert.AreEqual(dest[2, 2], 13);
+			Assert.AreEqual(dest[3, 0], 0);
+			Assert.AreEqual(dest[3, 1], 14);
+			Assert.AreEqual(dest[3, 2], 15);
+		}
+
+		[TestMethod]
+		[TestCategory("Fail")]
+		public void CopyTo2DRectangularArray_ArgumentError_Test()
+		{
+			var array = new LinqableArray2D<int>(3, 2);
+
+			try
+			{
+				array.CopyTo(rectangularArray: null);
+			}
+			catch (ArgumentNullException ex)
+			{
+				Assert.AreEqual("rectangularArray", ex.ParamName);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			var emptyDest = new int[0, 0];
+			try
+			{
+				array.CopyTo(emptyDest, index0: -1);
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				Assert.AreEqual("index0", ex.ParamName);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+			try
+			{
+				array.CopyTo(emptyDest, index1: -1);
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				Assert.AreEqual("index1", ex.ParamName);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			var dest22 = new int[2, 2];
+			try
+			{
+				array.CopyTo(dest22);
+			}
+			catch (ArgumentException ex)
+			{
+				Assert.AreEqual("Out of array size with dimension 0.", ex.Message);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			var dest31 = new int[3, 1];
+			try
+			{
+				array.CopyTo(dest31);
+			}
+			catch (ArgumentException ex)
+			{
+				Assert.AreEqual("Out of array size with dimension 1.", ex.Message);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			var dest32 = new int[3, 2];
+			try
+			{
+				array.CopyTo(dest32, index0: 1);
+			}
+			catch (ArgumentException ex)
+			{
+				Assert.AreEqual("Out of array size with dimension 0.", ex.Message);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+			try
+			{
+				array.CopyTo(dest32, index1: 1);
+			}
+			catch (ArgumentException ex)
+			{
+				Assert.AreEqual("Out of array size with dimension 1.", ex.Message);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
+
+		[TestMethod]
+		public void CopyTo2DLinqableArray_Test()
+		{
+			var array = new LinqableArray2D<int>(3, 2);
+			array[0, 0] = 10;
+			array[0, 1] = 11;
+			array[1, 0] = 12;
+			array[1, 1] = 13;
+			array[2, 0] = 14;
+			array[2, 1] = 15;
+
+			LinqableArray2D<int> dest;
+
+
+			dest = new LinqableArray2D<int>(4, 3);
+			array.CopyTo(dest, 0, 0);
+
+			Assert.AreEqual(dest[0, 0], 10);
+			Assert.AreEqual(dest[0, 1], 11);
+			Assert.AreEqual(dest[0, 2], 0);
+			Assert.AreEqual(dest[1, 0], 12);
+			Assert.AreEqual(dest[1, 1], 13);
+			Assert.AreEqual(dest[1, 2], 0);
+			Assert.AreEqual(dest[2, 0], 14);
+			Assert.AreEqual(dest[2, 1], 15);
+			Assert.AreEqual(dest[2, 2], 0);
+			Assert.AreEqual(dest[3, 0], 0);
+			Assert.AreEqual(dest[3, 1], 0);
+			Assert.AreEqual(dest[3, 2], 0);
+
+
+			dest = new LinqableArray2D<int>(4, 3);
+			array.CopyTo(dest, 1, 0);
+
+			Assert.AreEqual(dest[0, 0], 0);
+			Assert.AreEqual(dest[0, 1], 0);
+			Assert.AreEqual(dest[0, 2], 0);
+			Assert.AreEqual(dest[1, 0], 10);
+			Assert.AreEqual(dest[1, 1], 11);
+			Assert.AreEqual(dest[1, 2], 0);
+			Assert.AreEqual(dest[2, 0], 12);
+			Assert.AreEqual(dest[2, 1], 13);
+			Assert.AreEqual(dest[2, 2], 0);
+			Assert.AreEqual(dest[3, 0], 14);
+			Assert.AreEqual(dest[3, 1], 15);
+			Assert.AreEqual(dest[3, 2], 0);
+
+
+			dest = new LinqableArray2D<int>(4, 3);
+			array.CopyTo(dest, 0, 1);
+
+			Assert.AreEqual(dest[0, 0], 0);
+			Assert.AreEqual(dest[0, 1], 10);
+			Assert.AreEqual(dest[0, 2], 11);
+			Assert.AreEqual(dest[1, 0], 0);
+			Assert.AreEqual(dest[1, 1], 12);
+			Assert.AreEqual(dest[1, 2], 13);
+			Assert.AreEqual(dest[2, 0], 0);
+			Assert.AreEqual(dest[2, 1], 14);
+			Assert.AreEqual(dest[2, 2], 15);
+			Assert.AreEqual(dest[3, 0], 0);
+			Assert.AreEqual(dest[3, 1], 0);
+			Assert.AreEqual(dest[3, 2], 0);
+
+
+			dest = new LinqableArray2D<int>(4, 3);
+			array.CopyTo(dest, 1, 1);
+
+			Assert.AreEqual(dest[0, 0], 0);
+			Assert.AreEqual(dest[0, 1], 0);
+			Assert.AreEqual(dest[0, 2], 0);
+			Assert.AreEqual(dest[1, 0], 0);
+			Assert.AreEqual(dest[1, 1], 10);
+			Assert.AreEqual(dest[1, 2], 11);
+			Assert.AreEqual(dest[2, 0], 0);
+			Assert.AreEqual(dest[2, 1], 12);
+			Assert.AreEqual(dest[2, 2], 13);
+			Assert.AreEqual(dest[3, 0], 0);
+			Assert.AreEqual(dest[3, 1], 14);
+			Assert.AreEqual(dest[3, 2], 15);
+		}
+
+		[TestMethod]
+		[TestCategory("Fail")]
+		public void CopyTo2DLinqableArray_ArgumentError_Test()
+		{
+			var array = new LinqableArray2D<int>(3, 2);
+
+			try
+			{
+				array.CopyTo(linqableArray: null);
+			}
+			catch (ArgumentNullException ex)
+			{
+				Assert.AreEqual("linqableArray", ex.ParamName);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			var emptyDest = new LinqableArray2D<int>(0, 0);
+			try
+			{
+				array.CopyTo(emptyDest, index0: -1);
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				Assert.AreEqual("index0", ex.ParamName);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+			try
+			{
+				array.CopyTo(emptyDest, index1: -1);
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				Assert.AreEqual("index1", ex.ParamName);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			var dest22 = new LinqableArray2D<int>(2, 2);
+			try
+			{
+				array.CopyTo(dest22);
+			}
+			catch (ArgumentException ex)
+			{
+				Assert.AreEqual("Out of array size with dimension 0.", ex.Message);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			var dest31 = new LinqableArray2D<int>(3, 1);
+			try
+			{
+				array.CopyTo(dest31);
+			}
+			catch (ArgumentException ex)
+			{
+				Assert.AreEqual("Out of array size with dimension 1.", ex.Message);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			var dest32 = new LinqableArray2D<int>(3, 2);
+			try
+			{
+				array.CopyTo(dest32, index0: 1);
+			}
+			catch (ArgumentException ex)
+			{
+				Assert.AreEqual("Out of array size with dimension 0.", ex.Message);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+			try
+			{
+				array.CopyTo(dest32, index1: 1);
+			}
+			catch (ArgumentException ex)
+			{
+				Assert.AreEqual("Out of array size with dimension 1.", ex.Message);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
 	}
 }
